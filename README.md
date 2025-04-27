@@ -1,61 +1,157 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Task Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem manajemen tugas internal untuk memantau pekerjaan harian dari tim seperti IT, HR, dan Operasional. Dibangun dengan Laravel dan Filament Admin Panel.
 
-## About Laravel
+## Deskripsi
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Sistem ini memungkinkan perusahaan melacak tugas, mengelompokkan tugas berdasarkan proyek, dan menampilkan ringkasan status pekerjaan setiap user dan project. Dilengkapi dengan Role-Based Access Control untuk keamanan dan manajemen hak akses.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Prasyarat
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP >= 8.1
+- Composer
+- Node.js & NPM
+- Database (MySQL, PostgreSQL, atau SQLite)
+- Git
 
-## Learning Laravel
+## Langkah-Langkah Instalasi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Clone Repository dan Masuk ke Direktori Project
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+git clone [URL_REPOSITORY]
+cd task-management
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Install Dependencies PHP
 
-## Laravel Sponsors
+```bash
+composer install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 3. Setup Environment
 
-### Premium Partners
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+### 4. Konfigurasi Database
 
-## Contributing
+Buka file `.env` dan sesuaikan konfigurasi database:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Jika menggunakan SQLite:
+1. Buat file database kosong:
+```bash
+touch database/database.sqlite
+```
 
-## Code of Conduct
+2. Edit konfigurasi database di `.env`:
+```
+DB_CONNECTION=sqlite
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=laravel
+# DB_USERNAME=root
+# DB_PASSWORD=
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Jika menggunakan MySQL/PostgreSQL:
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nama_database_anda
+DB_USERNAME=username_database
+DB_PASSWORD=password_database
+```
 
-## Security Vulnerabilities
+### 5. Migrasi Database dan Seeding
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan migrate
+php artisan db:seed
+```
 
-## License
+### 6. Setup Filament Shield (RBAC)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Instal dan konfigurasi Shield:
+```bash
+php artisan shield:install
+```
+Ketik `admin` saat diminta untuk memilih guard.
+
+### 7. Buat Permission untuk Resources
+
+```bash
+php artisan shield:generate --resource=AssignUserResource
+php artisan shield:generate --resource=TaskResource
+php artisan shield:generate --resource=UserResource
+php artisan shield:generate --resource=ProjectResource
+```
+
+### 8. Buat Role Super Admin
+
+```bash
+php artisan shield:super-admin --user=1
+```
+
+### 9. Jalankan Aplikasi
+
+```bash
+php artisan serve
+```
+
+Sistem akan berjalan di `http://localhost:8000`
+
+## Akses Sistem
+
+### Administrator
+- URL: `http://localhost:8000/admin`
+- Username: `admin`
+- Password: `12345678`
+
+### Manager
+- URL: `http://localhost:8000/admin`
+- Username: `manager`
+- Password: `12345678`
+
+### User
+- URL: `http://localhost:8000/admin`
+- Username: `user`
+- Password: `12345678`
+
+## Fitur Utama
+
+- **Manajemen Project**: Mengelola semua proyek perusahaan
+- **Manajemen Task**: Membuat dan mengelola tugas yang terkait dengan proyek
+- **Dashboard**: Visualisasi status tugas berdasarkan pengguna dan proyek
+- **Manajemen Hak Akses**: Mengelola peran dan izin pengguna
+
+## Pengaturan Hak Akses
+
+Admin dapat mengatur hak akses setiap peran melalui menu Roles. Pastikan untuk mengatur hak akses sesuai dengan kebutuhan organisasi Anda.
+
+## Pemecahan Masalah
+
+Jika mengalami masalah, coba langkah-langkah berikut:
+
+```bash
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
+```
+
+Jika ada masalah dengan permission direktori:
+```bash
+chmod -R 775 storage bootstrap/cache
+```
+
+## Kontribusi
+
+Jika ingin berkontribusi pada project ini, silakan buat pull request atau laporkan issues melalui GitHub.
+
+## Lisensi
+
+[Sesuaikan dengan lisensi project Anda]
