@@ -107,17 +107,17 @@ Sistem akan berjalan di `http://localhost:8000`
 ## Akses Sistem
 
 ### Administrator
-- URL: `http://localhost:8000/admin`
+- URL: `http://localhost:8000/task-management`
 - Username: `admin`
 - Password: `12345678`
 
 ### Manager
-- URL: `http://localhost:8000/admin`
+- URL: `http://localhost:8000/task-management`
 - Username: `manager`
 - Password: `12345678`
 
 ### User
-- URL: `http://localhost:8000/admin`
+- URL: `http://localhost:8000/task-management`
 - Username: `user`
 - Password: `12345678`
 
@@ -147,11 +147,3 @@ Jika ada masalah dengan permission direktori:
 ```bash
 chmod -R 775 storage bootstrap/cache
 ```
-
-## Kontribusi
-
-Jika ingin berkontribusi pada project ini, silakan buat pull request atau laporkan issues melalui GitHub.
-
-## Lisensi
-
-[Sesuaikan dengan lisensi project Anda]
